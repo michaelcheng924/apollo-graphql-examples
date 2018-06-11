@@ -1,0 +1,25 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "expo": "^27.1.0",
+    "react": "^16.4.0",
+    "react-art": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-native": "^0.55.4",
+    "react-native-web": "^0.8.3",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start:native": "react-native-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3000",
+  "devDependencies": {
+    "react-native-scripts": "^1.14.0"
+  }
+}
