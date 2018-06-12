@@ -1,7 +1,5 @@
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
 import { ApolloProvider } from 'react-apollo';
 
 import apolloClient from './config/apollo-client';
@@ -11,4 +9,3 @@ ReactDOM.render(
     <ApolloProvider client={apolloClient}>
         <App />
     </ApolloProvider>, document.getElementById('root'));
-registerServiceWorker();
