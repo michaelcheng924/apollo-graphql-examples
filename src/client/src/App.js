@@ -1,12 +1,14 @@
+import './App.css';
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import './App.css';
+
+import Channels from './modules/channels';
 
 class App extends Component {
   render() {
     return (
       <View>
-        <Text>React App</Text>
+        <Channels />
       </View>
     );
   }
