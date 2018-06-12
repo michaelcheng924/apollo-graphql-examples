@@ -14,6 +14,11 @@ const channelsMutation = {
         });
 
         return channel.save();
+    },
+    deleteChannel(_, { id }) {
+        return Channel.remove({ _id: id }).then(() => ({
+            id
+        }));
     }
 }
 

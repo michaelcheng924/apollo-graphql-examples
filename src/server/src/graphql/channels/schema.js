@@ -5,6 +5,7 @@ const Channels = `
 
     extend type Mutation {
         addChannel(name: String!): Channel
+        deleteChannel(id: ID!): Channel
     }
 `;
 
