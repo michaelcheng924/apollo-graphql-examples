@@ -8,6 +8,7 @@
     "start:native": "cd src/client && yarn start:native",
     "start:server": "cd src/server && yarn start",
     "start:prod": "cd src/server && node .",
+    "install:all": "cd src/server && npm install && cd ../client && npm install",
     "postinstall": "cd src/client && npm install && npm run build && cd ../server && npm install"
   },
   "keywords": [],
