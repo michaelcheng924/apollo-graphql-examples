@@ -7,7 +7,8 @@
     "start:client": "cd src/client && yarn start",
     "start:native": "cd src/client && yarn start:native",
     "start:server": "cd src/server && yarn start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:prod": "cd src/server && node .",
+    "postinstall": "cd src/client && npm install && npm run build && cd ../server && npm install"
   },
   "keywords": [],
   "author": "Michael Cheng <cheng.c.mike@gmail.com> (http://michaelcheng.io)",
