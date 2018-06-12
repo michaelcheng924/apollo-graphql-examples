@@ -7,7 +7,6 @@ const channelsQuery = graphql(
             channels {
                 id
                 name
-                messages
             }
         }
     `,
