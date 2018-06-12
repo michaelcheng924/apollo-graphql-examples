@@ -11,21 +11,35 @@ const channelsQuery = graphql(
         }
     `,
     {
-        props: ({
-            data: { loading, error, channels }
-        }) => {
-            if (error) {
-                console.log(`Error: ${error.message}`);
-            }
+        props: ({ data: { loading, channels } }) => ({
+            loading,
+            channels
+        })
+    }
+);
 
-            return {
-                loading,
-                channels: channels || []
-            };
+const addChannelMutation = graphql(
+    gql`
+        mutation addChannel($name: String!) {
+            addChannel(name: $string) {
+                id
+                name
+            }
         }
+    `,
+    {
+        props: ({ mutate }) => ({
+            addChannel(name) {
+                mutate({
+                    variables: { name }
+                })
+            }
+        })
     }
 );
 
 export {
-    channelsQuery
+    channelsQuery,
+
+    addChannelMutation,
 };

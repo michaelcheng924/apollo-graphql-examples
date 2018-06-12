@@ -17,6 +17,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
             } catch (error) {
                 console.log(error);
             }
+
+            return null;
         })
     }
     if (networkError) {
