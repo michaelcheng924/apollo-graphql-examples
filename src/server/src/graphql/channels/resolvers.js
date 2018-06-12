@@ -6,6 +6,18 @@ const channelsQuery = {
     }
 };
 
+const channelsMutation = {
+    addChannel(_, { name }) {
+        const channel = new Channel({
+            name,
+            messages: []
+        });
+
+        return channel.save();
+    }
+}
+
 export {
-    channelsQuery
+    channelsQuery,
+    channelsMutation,
 };
