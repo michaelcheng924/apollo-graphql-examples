@@ -6,8 +6,10 @@ import {
     channelsQuery,
 
     addChannelMutation,
+    deleteChannelMutation,
 } from './graphql';
 import {
+    AddChannel,
     ChannelsList,
     Loading,
 } from './components';
@@ -24,7 +26,7 @@ class Channels extends Component {
             ? <Loading />
             : (
             <View>
-                <Text style={styles.header}>Channels</Text>
+                <AddChannel />
                 <ChannelsList channels={channels} />
             </View>
         );
@@ -32,13 +34,12 @@ class Channels extends Component {
 }
 
 const styles = StyleSheet.create({
-    header: {
-        fontSize: 20
-    },
+    
 });
 
 export default compose(
     channelsQuery,
 
     addChannelMutation,
+    deleteChannelMutation,
 )(Channels);

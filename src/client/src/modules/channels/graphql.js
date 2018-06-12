@@ -38,8 +38,28 @@ const addChannelMutation = graphql(
     }
 );
 
+const deleteChannelMutation = graphql(
+    gql`
+        mutation deleteChannel($id: ID!) {
+            deleteChannel(id: $id) {
+                id
+            }
+        }
+    `,
+    {
+        props: ({ mutate }) => ({
+            deleteChannel(id) {
+                mutate({
+                    variables: { id }
+                })
+            }
+        })
+    }
+);
+
 export {
     channelsQuery,
 
     addChannelMutation,
+    deleteChannelMutation,
 };
