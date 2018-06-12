@@ -1,22 +1,23 @@
-import { Channel } from '../connectors';
+import knex from '../connectors';
 
 const channelsQuery = {
     channels() {
-        return Channel.find({});
+        return knex('channels');
     }
 };
 
 const channelsMutation = {
     addChannel(_, { name }) {
-        const channel = new Channel({
-            name,
-            messages: []
+        return knex('channels').insert({
+            name
+        }).then(() => {
+            return knex('channels').where({ name }).then(results => {
+                return results[0];
+            });
         });
-
-        return channel.save();
     },
     deleteChannel(_, { id }) {
-        return Channel.remove({ _id: id }).then(() => ({
+        return knex('channels').where({ id }).del().then(() => ({
             id
         }));
     }
