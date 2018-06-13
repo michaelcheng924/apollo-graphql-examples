@@ -2,12 +2,37 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { compose } from "react-apollo";
 
-import { channelQuery } from "./graphql";
+import {
+  messageInputQuery,
+  channelQuery,
+  addMessageMutation,
+  updateMessageInputMutation
+} from "./graphql";
 import { AddMessage, ChannelMessages } from "./components";
 
 class Channel extends Component {
+  updateMessageInput = event => {
+    this.props.updateMessageInput(event.target.value);
+  };
+
+  addMessage = event => {
+    event.preventDefault();
+
+    const {
+      addMessage,
+      id,
+      messageInput,
+      refetch,
+      updateMessageInput
+    } = this.props;
+
+    addMessage(id, messageInput);
+    updateMessageInput("");
+    refetch();
+  };
+
   render() {
-    const { loading, messages, name } = this.props;
+    const { loading, messageInput, messages, name } = this.props;
 
     if (loading) {
       return <h2>Loading</h2>;
@@ -19,11 +44,20 @@ class Channel extends Component {
         <hr />
         <h2>{name}</h2>
         <hr />
-        <AddMessage />
+        <AddMessage
+          addMessage={this.addMessage}
+          messageInput={messageInput}
+          updateMessageInput={this.updateMessageInput}
+        />
         <ChannelMessages messages={messages} />
       </div>
     );
   }
 }
 
-export default compose(channelQuery)(Channel);
+export default compose(
+  channelQuery,
+  messageInputQuery,
+  addMessageMutation,
+  updateMessageInputMutation
+)(Channel);

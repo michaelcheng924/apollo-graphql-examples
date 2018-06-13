@@ -8,6 +8,10 @@ const Channel = `
         name: String!
         messages: [String]
     }
+
+    extend type Mutation {
+        addMessage(channel: Int!, text: String!): String
+    }
 `;
 
 export default Channel;

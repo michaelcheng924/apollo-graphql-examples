@@ -17,8 +17,72 @@ const channelQuery = graphql(
         params: { id }
       }
     }) => ({ variables: { id } }),
-    props: ({ data: { loading, channel } }) => ({ loading, ...channel })
+    props: ({ data: { channel, loading, refetch } }) => ({
+      ...channel,
+      loading,
+      refetch
+    })
   }
 );
 
-export { channelQuery };
+const messageInputQuery = graphql(
+  gql`
+    query {
+      channelPage @client {
+        messageInput
+      }
+    }
+  `,
+  {
+    props: ({
+      data: {
+        channelPage: { messageInput }
+      }
+    }) => ({ messageInput })
+  }
+);
+
+const addMessageMutation = graphql(
+  gql`
+    mutation addMessage($channel: Int!, $text: String!) {
+      addMessage(channel: $channel, text: $text)
+    }
+  `,
+  {
+    props: ({ mutate }) => ({
+      addMessage(channel, text) {
+        mutate({
+          variables: { channel, text }
+        });
+      }
+    })
+  }
+);
+
+const updateMessageInputMutation = graphql(
+  gql`
+    mutation updateMessageInput($messageInput: String) {
+      updateMessageInput(messageInput: $messageInput) @client {
+        channelPage {
+          messageInput
+        }
+      }
+    }
+  `,
+  {
+    props: ({ mutate }) => ({
+      updateMessageInput(messageInput) {
+        mutate({
+          variables: { messageInput }
+        });
+      }
+    })
+  }
+);
+
+export {
+  messageInputQuery,
+  channelQuery,
+  addMessageMutation,
+  updateMessageInputMutation
+};
