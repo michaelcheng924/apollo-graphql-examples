@@ -31,7 +31,7 @@ class Channels extends Component {
     deleteChannel = id => {
         const { deleteChannel, refetch } = this.props;
 
-        this.props.deleteChannel(id, refetch);
+        deleteChannel(id, refetch);
     };
     
     render() {

@@ -9,7 +9,7 @@
     "start:server": "cd src/server && yarn start",
     "start:prod": "cd src/server && node .",
     "install:all": "cd src/server && npm install && cd ../client && npm install",
-    "postinstall": "cd src/client && npm install && npm run build && cd ../server && npm install"
+    "heroku-postbuild": "cd src/client && npm install && npm run build && cd ../server && npm install"
   },
   "keywords": [],
   "author": "Michael Cheng <cheng.c.mike@gmail.com> (http://michaelcheng.io)",
