@@ -19,6 +19,20 @@ class Channels extends Component {
     updateAddChannelNameInput = event => {
         this.props.updateAddChannelNameInput(event.target.value);
     };
+
+    addChannel = event => {
+        event.preventDefault();
+
+        const { addChannel, addChannelNameInput, refetch } = this.props;
+
+        addChannel(addChannelNameInput, refetch);
+    };
+
+    deleteChannel = id => {
+        const { deleteChannel, refetch } = this.props;
+
+        this.props.deleteChannel(id, refetch);
+    };
     
     render() {
         const {
@@ -32,10 +46,14 @@ class Channels extends Component {
             : (
             <div>
                 <AddChannel
+                    addChannel={this.addChannel}
                     addChannelNameInput={addChannelNameInput}
                     updateAddChannelNameInput={this.updateAddChannelNameInput}
                 />
-                <ChannelsList channels={channels} />
+                <ChannelsList
+                    channels={channels}
+                    deleteChannel={this.deleteChannel}
+                />
             </div>
         );
     }

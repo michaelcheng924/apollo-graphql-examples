@@ -11,9 +11,10 @@ const channelsQuery = graphql(
         }
     `,
     {
-        props: ({ data: { loading, channels } }) => ({
+        props: ({ data: { loading, channels, refetch } }) => ({
             loading,
-            channels
+            channels,
+            refetch
         })
     }
 );
@@ -34,7 +35,7 @@ const addChannelNameInputQuery = graphql(
 const addChannelMutation = graphql(
     gql`
         mutation addChannel($name: String!) {
-            addChannel(name: $string) {
+            addChannel(name: $name) {
                 id
                 name
             }
@@ -42,10 +43,10 @@ const addChannelMutation = graphql(
     `,
     {
         props: ({ mutate }) => ({
-            addChannel(name) {
+            addChannel(name, refetch) {
                 mutate({
                     variables: { name }
-                })
+                }).then(refetch);
             }
         })
     }
@@ -61,10 +62,10 @@ const deleteChannelMutation = graphql(
     `,
     {
         props: ({ mutate }) => ({
-            deleteChannel(id) {
+            deleteChannel(id, refetch) {
                 mutate({
                     variables: { id }
-                })
+                }).then(refetch);
             }
         })
     }

@@ -1,10 +1,11 @@
 import React from 'react';
 
 const AddChannel = ({
+    addChannel,
     addChannelNameInput,
     updateAddChannelNameInput,
 }) => (
-    <div>
+    <form onSubmit={addChannel}>
         <input
             onChange={updateAddChannelNameInput}
             placeholder="Channel name"
@@ -12,7 +13,7 @@ const AddChannel = ({
         <button>
             Add Channel
         </button>
-    </div>
+    </form>
 );
 
 export default AddChannel;

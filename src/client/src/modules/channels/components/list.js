@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 
+import { ChannelsListItem } from '.';
+
 class ChannelsList extends Component {
-    renderChannel(channel) {
-        const { name } = channel.item;
-
-        return (
-            <div>
-                {name}
-            </div>
-        );
-    }
-
     render() {
-        const { channels } = this.props;
+        const { channels, deleteChannel } = this.props;
 
         return channels.map(channel => (
-            <div key={channel.id}>
-                {channel.name}
-            </div>
+            <ChannelsListItem
+                {...channel}
+                deleteChannel={deleteChannel}
+                key={channel.id}
+            />
         ));
     }
 }

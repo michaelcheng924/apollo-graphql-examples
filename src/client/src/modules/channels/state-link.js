@@ -16,7 +16,7 @@ const channelsPageMutations = {
 
         cache.writeData({ data });
 
-        return data;
+        return data.channelsPage;
     }
 }
 
