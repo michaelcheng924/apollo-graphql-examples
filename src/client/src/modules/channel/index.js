@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { compose } from "react-apollo";
+import { get } from "lodash";
 
 import {
   messageInputQuery,
   channelQuery,
   addMessageMutation,
-  updateMessageInputMutation
+  updateMessageInputMutation,
+  messageAddedSubscription
 } from "./graphql";
 import { AddMessage, ChannelMessages } from "./components";
 
 class Channel extends Component {
+  componentWillUpdate(nextProps) {
+    const { messages, refetch } = this.props;
+
+    if (get(messages, "length") !== get(nextProps, "newMessages.length")) {
+      refetch();
+    }
+  }
+
   updateMessageInput = event => {
     this.props.updateMessageInput(event.target.value);
   };
@@ -59,5 +69,6 @@ export default compose(
   channelQuery,
   messageInputQuery,
   addMessageMutation,
-  updateMessageInputMutation
+  updateMessageInputMutation,
+  messageAddedSubscription
 )(Channel);

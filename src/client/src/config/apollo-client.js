@@ -1,40 +1,38 @@
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloLink } from "apollo-link";
+import { ApolloLink, split } from "apollo-link";
 import { HttpLink } from "apollo-link-http";
-import { onError } from "apollo-link-error";
+import { WebSocketLink } from "apollo-link-ws";
+import { getMainDefinition } from "apollo-utilities";
 
 import getStateLink from "./get-state-link";
+import errorLink from "./error-link";
 
 const cache = new InMemoryCache();
 
 const stateLink = getStateLink(cache);
 const httpLink = new HttpLink();
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
-      try {
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
-            locations
-          )}, Path: ${path}`
-        );
-      } catch (error) {
-        console.log(error);
-      }
-
-      return null;
-    });
-  }
-  if (networkError) {
-    console.log(`[Network error]: ${networkError}`);
+const wsLink = new WebSocketLink({
+  uri: "ws://localhost:5000/subscriptions",
+  options: {
+    reconnect: true
   }
 });
 
+const httpWsLink = split(
+  ({ query }) => {
+    const { kind, operation } = getMainDefinition(query);
+
+    return kind === "OperationDefinition" && operation === "subscription";
+  },
+  wsLink,
+  httpLink
+);
+
 const apolloClient = new ApolloClient({
   cache,
-  link: ApolloLink.from([errorLink, stateLink, httpLink])
+  link: ApolloLink.from([errorLink, stateLink, httpWsLink])
 });
 
 export default apolloClient;

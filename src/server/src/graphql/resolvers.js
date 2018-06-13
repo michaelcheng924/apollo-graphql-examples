@@ -1,4 +1,8 @@
-import { channelQuery, channelMutation } from "./channel/resolvers";
+import {
+  channelQuery,
+  channelMutation,
+  channelSubscription
+} from "./channel/resolvers";
 import { channelsQuery, channelsMutation } from "./channels/resolvers";
 
 const resolvers = {
@@ -9,6 +13,9 @@ const resolvers = {
   Mutation: {
     ...channelMutation,
     ...channelsMutation
+  },
+  Subscription: {
+    ...channelSubscription
   }
 };
 

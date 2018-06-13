@@ -1,5 +1,10 @@
 import knex from "../connectors";
+import { withFilter } from "graphql-subscriptions";
 import { find } from "lodash";
+
+import pubsub from "../pubsub";
+
+const MESSAGE_ADDED = "messageAdded";
 
 const channelQuery = {
   channel(_, { id }) {
@@ -15,10 +20,29 @@ const channelQuery = {
 
 const channelMutation = {
   addMessage(_, { channel, text }) {
+    pubsub.publish(MESSAGE_ADDED, {
+      [MESSAGE_ADDED]: {
+        id: channel,
+        messages: knex("messages")
+          .where({ channel })
+          .map(message => message.text)
+          .then(messages => messages.reverse())
+      }
+    });
+
     return knex("messages")
       .insert({ channel, text })
       .then(() => text);
   }
 };
 
-export { channelQuery, channelMutation };
+const channelSubscription = {
+  messageAdded: {
+    subscribe: withFilter(
+      () => pubsub.asyncIterator(MESSAGE_ADDED),
+      (payload, variables) => payload[MESSAGE_ADDED].id == variables.id
+    )
+  }
+};
+
+export { channelQuery, channelMutation, channelSubscription };

@@ -80,9 +80,29 @@ const updateMessageInputMutation = graphql(
   }
 );
 
+const messageAddedSubscription = graphql(
+  gql`
+    subscription messageAdded($id: ID!) {
+      messageAdded(id: $id) {
+        id
+        messages
+      }
+    }
+  `,
+  {
+    options: ({
+      match: {
+        params: { id }
+      }
+    }) => ({ variables: { id } }),
+    props: ({ data: { messages } }) => ({ newMessages: messages })
+  }
+);
+
 export {
   messageInputQuery,
   channelQuery,
   addMessageMutation,
-  updateMessageInputMutation
+  updateMessageInputMutation,
+  messageAddedSubscription
 };

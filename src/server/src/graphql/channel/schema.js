@@ -12,6 +12,10 @@ const Channel = `
     extend type Mutation {
         addMessage(channel: Int!, text: String!): String
     }
+
+    extend type Subscription {
+        messageAdded(id: ID!): Channel
+    }
 `;
 
 export default Channel;
