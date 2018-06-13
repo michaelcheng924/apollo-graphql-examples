@@ -12,7 +12,7 @@ const channelQuery = graphql(
         }
     `,
         {
-            options: ({ match: { params: { id } } }) =>  ({ variables: { id } }),
+            options: ({ match: { params: { id } } }) => ({ variables: { id } }),
             props: ({ data: { loading, channel }}) => ({ loading, ...channel })
         }
 );
