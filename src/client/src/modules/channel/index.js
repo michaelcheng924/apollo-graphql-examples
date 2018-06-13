@@ -5,13 +5,23 @@ import { compose } from 'react-apollo';
 import {
     channelQuery,
 } from './graphql';
+import { ChannelMessages } from './components';
 
 class Channel extends Component {
     render() {
-        console.log(this.props)
+        const { loading, messages, name } = this.props;
+
+        if (loading) {
+            return <div>Loading</div>;
+        }
+
         return (
             <div>
                 <Link to="/">Home</Link>
+                <hr />
+                <div>{name}</div>
+                <hr />
+                <ChannelMessages messages={messages} />
             </div>
         );
     }
