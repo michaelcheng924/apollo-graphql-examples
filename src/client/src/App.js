@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 
-import Channel from './modules/channel';
-import Channels from './modules/channels';
+import Channel from "./modules/channel";
+import Channels from "./modules/channels";
 
-import './App.css';
+import "./App.css";
 
 class App extends Component {
   render() {
