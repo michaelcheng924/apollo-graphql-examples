@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 
 const channelQuery = graphql(
     gql`
-        query {
-            channel {
+        query channel($id: ID!) {
+            channel(id: $id) {
                 id
                 name
                 messages
@@ -12,6 +12,7 @@ const channelQuery = graphql(
         }
     `,
         {
+            options: ({ match: { params: { id } } }) =>  ({ variables: { id } }),
             props: ({ data: { loading, channel }}) => ({ loading, channel })
         }
 );

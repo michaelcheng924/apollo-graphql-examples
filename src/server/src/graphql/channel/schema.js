@@ -1,6 +1,6 @@
 const Channel = `
     extend type Query {
-        channel: Channel
+        channel(id: ID!): Channel
     }
 
     type Channel {
