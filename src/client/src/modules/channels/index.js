@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { compose } from 'react-apollo';
-import { StyleSheet, Text, View } from 'react-native';
 
 import {
+    addChannelNameInputQuery,
     channelsQuery,
 
     addChannelMutation,
     deleteChannelMutation,
+    updateAddChannelNameInputMutation,
 } from './graphql';
 import {
     AddChannel,
@@ -15,31 +16,36 @@ import {
 } from './components';
 
 class Channels extends Component {
+    updateAddChannelNameInput = event => {
+        this.props.updateAddChannelNameInput(event.target.value);
+    };
+    
     render() {
-        const { channels, loading } = this.props;
-
-        if (loading) {
-            return <Text style={styles.loading}>Loading...</Text>;
-        }
+        const {
+            addChannelNameInput,
+            channels,
+            loading,
+        } = this.props;
 
         return loading
             ? <Loading />
             : (
-            <View>
-                <AddChannel />
+            <div>
+                <AddChannel
+                    addChannelNameInput={addChannelNameInput}
+                    updateAddChannelNameInput={this.updateAddChannelNameInput}
+                />
                 <ChannelsList channels={channels} />
-            </View>
+            </div>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    
-});
-
 export default compose(
+    addChannelNameInputQuery,
     channelsQuery,
 
     addChannelMutation,
     deleteChannelMutation,
+    updateAddChannelNameInputMutation,
 )(Channels);

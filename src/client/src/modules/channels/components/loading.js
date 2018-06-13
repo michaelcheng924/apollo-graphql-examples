@@ -1,16 +1,9 @@
 import React from 'react';
-import {  StyleSheet, Text } from 'react-native';
 
 const Loading = () => (
-    <Text style={styles.loading}>
+    <div>
         Loading...
-    </Text>
+    </div>
 );
-
-const styles = StyleSheet.create({
-    loading: {
-        fontSize: 20
-    },
-});
 
 export default Loading;

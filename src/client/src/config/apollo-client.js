@@ -4,9 +4,11 @@ import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 
+import getStateLink from './get-state-link';
 
-export const cache = new InMemoryCache();
+const cache = new InMemoryCache();
 
+const stateLink = getStateLink(cache);
 const httpLink = new HttpLink();
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
@@ -28,7 +30,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const apolloClient = new ApolloClient({
     cache,
-    link: ApolloLink.from([errorLink, httpLink])
+    link: ApolloLink.from([errorLink, stateLink, httpLink])
 });
 
 export default apolloClient;

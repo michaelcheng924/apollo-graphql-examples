@@ -18,6 +18,19 @@ const channelsQuery = graphql(
     }
 );
 
+const addChannelNameInputQuery = graphql(
+    gql`
+        query {
+            channelsPage @client {
+                nameInput
+            }
+        }
+    `,
+    {
+        props: ({ data: { channelsPage: { nameInput } }}) => ({ addChannelNameInput: nameInput })
+    }
+);
+
 const addChannelMutation = graphql(
     gql`
         mutation addChannel($name: String!) {
@@ -57,9 +70,32 @@ const deleteChannelMutation = graphql(
     }
 );
 
+const updateAddChannelNameInputMutation = graphql(
+    gql`
+        mutation updateAddChannelNameInput ($nameInput: String) {
+            updateAddChannelNameInput(nameInput: $nameInput) @client {
+                channelsPage {
+                    nameInput
+                }
+            }
+        }
+    `,
+    {
+        props: ({ mutate }) => ({
+            updateAddChannelNameInput(nameInput) {
+                mutate({
+                    variables: { nameInput }
+                })
+            }
+        })
+    }
+)
+
 export {
+    addChannelNameInputQuery,
     channelsQuery,
 
     addChannelMutation,
     deleteChannelMutation,
+    updateAddChannelNameInputMutation,
 };

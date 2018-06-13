@@ -1,38 +1,25 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
 
 class ChannelsList extends Component {
     renderChannel(channel) {
         const { name } = channel.item;
 
         return (
-            <Text style={styles.channel}>
+            <div>
                 {name}
-            </Text>
+            </div>
         );
     }
 
     render() {
         const { channels } = this.props;
 
-        return (
-            <FlatList
-                data={channels}
-                keyExtractor={({ id }) => id}
-                renderItem={this.renderChannel}
-                style={styles.channels}
-            />
-        );
+        return channels.map(channel => (
+            <div key={channel.id}>
+                {channel.name}
+            </div>
+        ));
     }
 }
-
-const styles = StyleSheet.create({
-    channels: {
-        marginTop: 20
-    },
-    channel: {
-        color: 'green'
-    }
-});
 
 export default ChannelsList;
