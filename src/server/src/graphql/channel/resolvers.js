@@ -9,6 +9,7 @@ const MESSAGE_ADDED = "messageAdded";
 const channelQuery = {
   channel(_, { id }) {
     return knex("channels")
+      .where({ id })
       .join("messages", "channels.id", "=", "messages.channel")
       .then(results => {
         const result = find(results, result => result.id == id);
@@ -22,17 +23,15 @@ const channelMutation = {
   addMessage(_, { channel, text }) {
     pubsub.publish(MESSAGE_ADDED, {
       [MESSAGE_ADDED]: {
-        id: channel,
-        messages: knex("messages")
-          .where({ channel })
-          .map(message => message.text)
-          .then(messages => messages.reverse())
+        id: channel
       }
     });
 
     return knex("messages")
       .insert({ channel, text })
-      .then(() => text);
+      .then(() => {
+        return text;
+      });
   }
 };
 
@@ -40,7 +39,9 @@ const channelSubscription = {
   messageAdded: {
     subscribe: withFilter(
       () => pubsub.asyncIterator(MESSAGE_ADDED),
-      (payload, variables) => payload[MESSAGE_ADDED].id == variables.id
+      (payload, variables) => {
+        return payload[MESSAGE_ADDED].id == variables.id;
+      }
     )
   }
 };

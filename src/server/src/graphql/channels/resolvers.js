@@ -16,7 +16,14 @@ const channelsMutation = {
         return knex("channels")
           .where({ name })
           .then(results => {
-            return results[0];
+            const newChannel = results[0];
+
+            return knex("messages")
+              .insert({
+                text: `Welcome to ${name}!`,
+                channel: newChannel.id
+              })
+              .then(() => newChannel);
           });
       });
   },

@@ -95,7 +95,7 @@ const messageAddedSubscription = graphql(
         params: { id }
       }
     }) => ({ variables: { id } }),
-    props: ({ data: { messages } }) => ({ newMessages: messages })
+    props: ({ data: { loading } }) => ({ messageAddedLoading: loading })
   }
 );
 

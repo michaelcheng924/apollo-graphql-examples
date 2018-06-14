@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { compose } from "react-apollo";
-import { get } from "lodash";
 
 import {
   messageInputQuery,
@@ -14,9 +13,8 @@ import { AddMessage, ChannelMessages } from "./components";
 
 class Channel extends Component {
   componentWillUpdate(nextProps) {
-    const { messages, refetch } = this.props;
-
-    if (get(messages, "length") !== get(nextProps, "newMessages.length")) {
+    const { messageAddedLoading, refetch } = this.props;
+    if (messageAddedLoading && !nextProps.messageAddedLoading) {
       refetch();
     }
   }

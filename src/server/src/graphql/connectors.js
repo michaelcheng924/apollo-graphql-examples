@@ -35,14 +35,14 @@ knex.schema.hasTable("messages").then(hasTable => {
   if (!hasTable) {
     knex.schema
       .createTable("messages", table => {
-        table.increments("id");
+        table.increments("messageId");
         table.string("text");
         table.integer("channel");
       })
       .then(() => {
         knex("messages")
           .insert({
-            text: "Seed message",
+            text: "Welcome to Seed Channel!",
             channel: 1
           })
           .then(() => {
