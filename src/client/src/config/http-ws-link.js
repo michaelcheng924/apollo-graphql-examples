@@ -5,8 +5,13 @@ import { getMainDefinition } from "apollo-utilities";
 
 const httpLink = new HttpLink();
 
+const uri =
+  process.env.REACT_APP_ENV === "production"
+    ? `ws://${window.location.host}/subscriptions`
+    : "ws://localhost:5000/subscriptions";
+
 const wsLink = new WebSocketLink({
-  uri: "ws://localhost:5000/subscriptions",
+  uri,
   options: {
     reconnect: true
   }
