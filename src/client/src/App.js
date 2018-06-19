@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Link, Route } from "react-router-dom";
 
-import Channel from "./modules/channel";
-import Channels from "./modules/channels";
+import Subscriptions from "./modules/subscriptions";
 
 import "./App.css";
 
@@ -11,10 +10,16 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <div className="app-title">Apollo Fullstack Starter Kit Demo</div>
+          <div className="app-title">Apollo/GraphQL Examples</div>
+          <div>
+            <Link to="/subscriptions">Subscriptions</Link>
+            {` | `}
+            <Link to="/authentication">Authentication</Link>
+            {` | `}
+            <Link to="/pagination">Pagination</Link>
+          </div>
 
-          <Route exact path="/" component={Channels} />
-          <Route path="/channel/:id" component={Channel} />
+          <Route path="/subscriptions" component={Subscriptions} />
         </div>
       </BrowserRouter>
     );

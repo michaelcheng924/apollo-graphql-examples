@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { compose } from "react-apollo";
 
 import {
-  messageInputQuery,
-  channelQuery,
+  subscriptionsDemoQuery,
   addMessageMutation,
-  updateMessageInputMutation,
   messageAddedSubscription
 } from "./graphql";
-import { AddMessage, ChannelMessages } from "./components";
+import { ChannelMessages } from "./components";
 
 class Channel extends Component {
   componentWillUpdate(nextProps) {
@@ -26,21 +23,15 @@ class Channel extends Component {
   addMessage = event => {
     event.preventDefault();
 
-    const {
-      addMessage,
-      id,
-      messageInput,
-      refetch,
-      updateMessageInput
-    } = this.props;
+    const { addMessage, refetch } = this.props;
 
-    addMessage(id, messageInput);
-    updateMessageInput("");
+    addMessage(this.messageInput.value);
+    this.messageInput.value = "";
     refetch();
   };
 
   render() {
-    const { loading, messageInput, messages, name } = this.props;
+    const { loading, messages } = this.props;
 
     if (loading) {
       return <h2>Loading</h2>;
@@ -48,15 +39,19 @@ class Channel extends Component {
 
     return (
       <div>
-        <Link to="/">Home</Link>
+        <h2>Subscriptions Demo</h2>
+        <div>
+          Open this page in two tabs. Add a message to one tab. That message
+          should automatically appear in the second tab also!
+        </div>
         <hr />
-        <h2>{name}</h2>
-        <hr />
-        <AddMessage
-          addMessage={this.addMessage}
-          messageInput={messageInput}
-          updateMessageInput={this.updateMessageInput}
-        />
+        <form onSubmit={this.addMessage}>
+          <input
+            placeholder="Type here..."
+            ref={messageInput => (this.messageInput = messageInput)}
+          />
+          <button>Add Message</button>
+        </form>
         <ChannelMessages messages={messages} />
       </div>
     );
@@ -64,9 +59,7 @@ class Channel extends Component {
 }
 
 export default compose(
-  channelQuery,
-  messageInputQuery,
+  subscriptionsDemoQuery,
   addMessageMutation,
-  updateMessageInputMutation,
   messageAddedSubscription
 )(Channel);

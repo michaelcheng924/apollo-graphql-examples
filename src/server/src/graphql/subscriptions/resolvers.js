@@ -1,49 +1,49 @@
 import knex from "../connectors";
 import { withFilter } from "graphql-subscriptions";
-import { find } from "lodash";
 
 import pubsub from "../pubsub";
 
 const MESSAGE_ADDED = "messageAdded";
 
-const channelQuery = {
-  channel(_, { id }) {
-    return knex("channels")
-      .where({ id })
-      .join("messages", "channels.id", "=", "messages.channel")
+const subscriptionsDemoQuery = {
+  subscriptionsDemo() {
+    return knex("subscriptions")
+      .join("messages")
       .then(results => {
-        const result = find(results, result => result.id == id);
+        const result = results[0];
         result.messages = results.map(item => item.text).reverse();
         return result;
       });
   }
 };
 
-const channelMutation = {
-  addMessage(_, { channel, text }) {
+const subscriptionsDemoMutation = {
+  addMessage(_, { text }) {
     pubsub.publish(MESSAGE_ADDED, {
-      [MESSAGE_ADDED]: {
-        id: channel
-      }
+      [MESSAGE_ADDED]: {}
     });
 
     return knex("messages")
-      .insert({ channel, text })
+      .insert({ text })
       .then(() => {
         return text;
       });
   }
 };
 
-const channelSubscription = {
+const subscriptionsDemoSubscription = {
   messageAdded: {
     subscribe: withFilter(
       () => pubsub.asyncIterator(MESSAGE_ADDED),
       (payload, variables) => {
-        return payload[MESSAGE_ADDED].id == variables.id;
+        return true;
       }
     )
   }
 };
 
-export { channelQuery, channelMutation, channelSubscription };
+export {
+  subscriptionsDemoQuery,
+  subscriptionsDemoMutation,
+  subscriptionsDemoSubscription
+};
