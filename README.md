@@ -1,21 +1,12 @@
-# Starter kit with Apollo server, client, and subscriptions
+# Apollo/GraphQL Examples for Subscriptions, Authentication, Pagination, and React Native
 
-The goals of this starter kit are to:
+## Apollo Fullstack Starter Kit
 
-1.  Help jump start a GraphQL project (fullstack, server, or client). The instructions below wire up a fullstack GraphQL project. The `server` and `client` folders can also stand alone.
-1.  Provide an example of a scalable GraphQL architecture/folder structure
+There is an Apollo fullstack starter kit repository here: https://github.com/michaelcheng924/apollo-fullstack-starter-kit. These examples build upon this starter kit.
 
 ## Demo
 
-http://apollo-fullstack-starter-kit.herokuapp.com/
-
-## Features
-
-1.  Node/Express server with apollo-server-express
-1.  apollo-link-http, apollo-link-error, apollo-link-state, and apollo-link-ws wired up on client
-1.  Subscriptions wired up between server and client
-1.  create-react-app for client
-1.  Easy deployment to Heroku
+http://apollo-graphql-examples.herokuapp.com/
 
 ## Getting Started
 
@@ -46,15 +37,11 @@ http://apollo-fullstack-starter-kit.herokuapp.com/
 
 #### Test subscriptions
 
-7.  Click `Enter` for a channel. Open another tab and copy the channel link there. Add a message. Message should show up in both tabs.
+1.  Click the "Subscriptions" link at the top.
+1.  Open that page in two tabs. Add a message to one tab. That message should automatically appear in the second tab also!
 
-## Deploying to Heroku
+## Todos
 
-1.  Download Heroku CLI and log in
-1.  `heroku create app-name`
-1.  `git push heroku master`
-
-## Todos/Contributing
-
-1.  Apollo Engine
-2.  If you have an idea or want to contribute, simply create an issue and/or submit a pull request!
+1.  Authentication
+1.  Pagination
+1.  React Native
