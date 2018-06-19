@@ -6,9 +6,9 @@ import {
   addMessageMutation,
   messageAddedSubscription
 } from "./graphql";
-import { ChannelMessages } from "./components";
+import { Messages } from "./components";
 
-class Channel extends Component {
+class SubscriptionsDemo extends Component {
   componentWillUpdate(nextProps) {
     const { messageAddedLoading, refetch } = this.props;
     if (messageAddedLoading && !nextProps.messageAddedLoading) {
@@ -52,7 +52,7 @@ class Channel extends Component {
           />
           <button>Add Message</button>
         </form>
-        <ChannelMessages messages={messages} />
+        <Messages messages={messages} />
       </div>
     );
   }
@@ -62,4 +62,4 @@ export default compose(
   subscriptionsDemoQuery,
   addMessageMutation,
   messageAddedSubscription
-)(Channel);
+)(SubscriptionsDemo);
